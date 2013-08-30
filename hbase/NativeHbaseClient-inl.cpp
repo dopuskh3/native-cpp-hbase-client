@@ -64,7 +64,7 @@ T NativeHbaseClient::invokeRootOperation(NativeHbaseClient* client,
         [=] {
           stats_counters_->addHistogramValue(
             "root_rpc_time_micros",
-            microseconds(system_clock::now() - now).count());
+            microseconds(std::chrono::duration_cast<microseconds>(system_clock::now() - now)).count());
         }
       );
       logHbaseOperation(opname,
@@ -128,7 +128,7 @@ T NativeHbaseClient::invokeRowOperation(const string& table, const string& row,
         [=] {
           stats_counters_->addHistogramValue(
             "rowop_rpc_time_micros",
-            microseconds(system_clock::now() - now).count());
+            microseconds(std::chrono::duration_cast<microseconds>(system_clock::now() - now)).count());
         }
       );
       NativeHbaseConnection* conn = findConnection(table, row, ignore_cache);
